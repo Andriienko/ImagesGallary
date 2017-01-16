@@ -11,12 +11,16 @@ namespace DAL.Entities
     public class UserProfile
     {
         [Key]
-        [ForeignKey("ApplicationUser")]
+        [ForeignKey("User")]
         public string Id { get; set; }
+
         public string Name { get; set; }
+
         public string Adress { get; set; }
+
         public string UserImage { get; set; }
-        public virtual AppUser ApplicationUser { get; set; }
+
+        public virtual AppUser User { get; set; }
 
     }
 }

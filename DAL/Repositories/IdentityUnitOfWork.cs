@@ -9,7 +9,7 @@ using DAL.Interfaces;
 using DAL.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace DAL.Repoositories
+namespace DAL.Repositories
 {
     public class IdentityUnitOfWork : IUnitOfWork
     {

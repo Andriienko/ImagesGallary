@@ -9,5 +9,8 @@ namespace DAL.Entities
 {
     public class AppRole : IdentityRole
     {
+        public AppRole(string roleName) : base(roleName) { }
+        public AppRole() : base() { }
     }
+
 }

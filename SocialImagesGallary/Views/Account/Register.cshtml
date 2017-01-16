@@ -1,0 +1,26 @@
+﻿@using SocialImagesGallary.Models.ViewModels;
+@model RegisterViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+</head>
+<body>
+    Registration page
+    <div> 
+        
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken();
+            @Html.EditorForModel(@Model);
+            <input type="submit" value="Register"/>
+        }
+    </div>
+</body>
+</html>

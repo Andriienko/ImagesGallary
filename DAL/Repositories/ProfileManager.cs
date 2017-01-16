@@ -7,7 +7,7 @@ using DAL.EF;
 using DAL.Entities;
 using DAL.Interfaces;
 
-namespace DAL.Repoositories
+namespace DAL.Repositories
 {
     public class ProfileManager : IProfileManager
     {
