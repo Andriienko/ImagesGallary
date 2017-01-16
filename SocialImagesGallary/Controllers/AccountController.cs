@@ -14,6 +14,7 @@ using SocialImagesGallary.Models.ViewModels;
 
 namespace SocialImagesGallary.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private IUserService UserService
@@ -30,6 +31,7 @@ namespace SocialImagesGallary.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
+        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.returnUrl = returnUrl;
@@ -37,13 +39,14 @@ namespace SocialImagesGallary.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             //await SetInitialDataAsync();
             if (ModelState.IsValid)
             {
-                UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
+                UserDTO userDto = new UserDTO { UserName = model.UserName, Password = model.Password };
                 ClaimsIdentity claim = await UserService.Authenticate(userDto);
                 if (claim == null)
                 {
@@ -56,9 +59,10 @@ namespace SocialImagesGallary.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    return RedirectToAction(returnUrl);
+                    return Redirect(returnUrl);
                 }
             }
+            ViewBag.returnUrl = returnUrl;
             return View(model);
         }
         public ActionResult Logout()
@@ -67,12 +71,14 @@ namespace SocialImagesGallary.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             //await SetInitialDataAsync();

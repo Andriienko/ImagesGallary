@@ -10,16 +10,42 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Register</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
 </head>
-<body>
-    Registration page
-    <div> 
-        
+<body class="register-container">
+    <h1>Registration</h1>
+    <div class="register">
+        @Html.ValidationSummary() 
         @using (Html.BeginForm("Register", "Account", FormMethod.Post))
         {
             @Html.AntiForgeryToken();
-            @Html.EditorForModel(@Model);
-            <input type="submit" value="Register"/>
+            <div class="form-group">
+                <label>User Name</label>
+                @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Adress</label>
+                @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
+            </div>
+            <button class="btn btn-primary" type="submit">Register</button>
         }
     </div>
 </body>

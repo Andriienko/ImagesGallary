@@ -48,7 +48,7 @@ namespace BLL.Services
         public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
         {
             ClaimsIdentity claims = null;
-            AppUser user = await Database.UserManager.FindAsync(userDto.Email, userDto.Password);
+            AppUser user = await Database.UserManager.FindAsync(userDto.UserName,userDto.Password);
             if (user != null)
                 claims = await Database.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             return claims;

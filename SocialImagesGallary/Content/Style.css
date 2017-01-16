@@ -1,0 +1,20 @@
+﻿.login {
+    max-width:33%;
+    margin-left:33%;
+    margin-top:15%;
+}
+.register {
+    margin-top:10%;
+    max-width:33%;
+    margin-left:33%;
+}
+.register-container h1{
+    text-align:center;
+}
+.login-container a{
+    position:relative;
+    float:right;
+    right:35%;
+    top:0%;
+    font-size:20px;
+}
