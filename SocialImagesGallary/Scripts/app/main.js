@@ -1,13 +1,10 @@
 ﻿$(document).ready(function () {
     ko.applyBindings(viewModel);
     getAllUsers();
-    $('#head').on('click', 'th', function () {
-        getSortedUsers($(this).text());
-    });
 });
 var apiUserUrls = {
     common: "/Admin/",
-    getAllUsers: "/Admin/GetAllUsers",
+    getAllUsers: "/api/User/",
     //getUser: common,
     postUser: "/Admin/Create",
     //updateUser: "",
@@ -19,13 +16,13 @@ var apiSortUrls = {
 };
 var viewModel = {
     users: ko.observableArray(),
-    editor: {
-        userName: ko.observable(""),
-        firstName: ko.observable(""),
-        lastName: ko.observable(""),
-        email: ko.observable(""),
-        password: ko.observable(""),
-    }
+    //editor: {
+    //    userName: ko.observable(""),
+    //    firstName: ko.observable(""),
+    //    lastName: ko.observable(""),
+    //    email: ko.observable(""),
+    //    password: ko.observable(""),
+    //}
 };
 
 function sendAjaxRequest(httpMethod, calback, url, reqData) {

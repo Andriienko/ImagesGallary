@@ -17,7 +17,7 @@ namespace DAL.Entities
         public string Title { get; set; }
 
         [Required]
-        public string ContentImage { get; set; }
+        public string Path { get; set; }
 
         public string UserId { get; set; }
 

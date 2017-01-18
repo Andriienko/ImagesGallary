@@ -13,21 +13,27 @@ namespace DAL.Repositories
 {
     public class IdentityUnitOfWork : IUnitOfWork
     {
-        private ApplicationContext db;
+        public ApplicationContext Db { get; }
 
+        public FriendRepository Friends { get; }
+        public IRepository<Image> Images { get; }
+        public IRepository<Message> Messages { get; }
         public ApplicationUserManager UserManager { get; }
         public ApplicationRoleManager RoleManager { get; }
         public IProfileManager ProfileManager { get; }
         public IdentityUnitOfWork(string connectioString)
         {
-            db = new ApplicationContext(connectioString);
-            UserManager = new ApplicationUserManager(new UserStore<AppUser>(db));
-            RoleManager = new ApplicationRoleManager(new RoleStore<AppRole>(db));
-            ProfileManager = new ProfileManager(db);
+            Db = new ApplicationContext(connectioString);
+            UserManager = new ApplicationUserManager(new UserStore<AppUser>(Db));
+            RoleManager = new ApplicationRoleManager(new RoleStore<AppRole>(Db));
+            ProfileManager = new ProfileManager(Db);
+            Messages = new MessageRepository(Db);
+            Images = new ImageRepository(Db);
+            Friends=new FriendRepository(Db);
         }
         public async Task SaveAsync()
         {
-            await db.SaveChangesAsync();
+            await Db.SaveChangesAsync();
         }
 
         public void Dispose()

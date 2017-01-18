@@ -12,7 +12,7 @@ namespace DAL.Entities
     public class AppUser : IdentityUser
     {
         public virtual UserProfile UserProfile { get; set; }
-        public virtual IEnumerable<Image> Images { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
 
        public virtual ICollection<AppUser> Friends { get; set; }
 

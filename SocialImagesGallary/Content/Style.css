@@ -18,3 +18,12 @@
     top:0%;
     font-size:20px;
 }
+#users{
+    max-width:50%;
+}
+#upload-form{
+    max-width:50%;
+}
+.body {
+    margin-top:40px;
+}

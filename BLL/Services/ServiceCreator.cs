@@ -14,5 +14,13 @@ namespace BLL.Services
         {
             return new UserService(new IdentityUnitOfWork(connection));
         }
+        public IImageService CreateImageService(string connection)
+        {
+            return new ImageService(new IdentityUnitOfWork(connection));
+        }
+        public IFriendService CreateFriendService(string connection)
+        {
+            return new FriendService(new IdentityUnitOfWork(connection));
+        }
     }
 }

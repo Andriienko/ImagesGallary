@@ -22,6 +22,7 @@ namespace DAL.EF
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Friend> Friends { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

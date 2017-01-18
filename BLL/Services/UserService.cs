@@ -62,6 +62,20 @@ namespace BLL.Services
                 //user.Friends    
             }
         }
+        public IEnumerable<UserDTO> GetAllUsers()
+        {
+            List<UserDTO> users = new List<UserDTO>();
+            foreach (var user in Database.Db.Users)
+            {
+                var userDto = new UserDTO {
+                    Id=user.Id,
+                    UserName=user.UserName,
+                    Email=user.Email
+                };
+                users.Add(userDto);
+            }
+            return users;
+        }
 
         public void Dispose()
         {

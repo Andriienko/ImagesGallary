@@ -5,13 +5,19 @@ namespace SocialImagesGallary.App_Start
 {
     using System;
     using System.Web;
-
+    using Ninject.Web.WebApi;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
     using BLL.Infrastructure;
     using Ninject.Modules;
+    using Util;
+    using System.Web.Http;
+    using BLL.Interfaces;
+    using BLL.Services;
+    using DAL.Interfaces;
+    using DAL.Repositories;
 
     public static class NinjectWebCommon 
     {
@@ -49,6 +55,7 @@ namespace SocialImagesGallary.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
+                GlobalConfiguration.Configuration.DependencyResolver = new Ninject.Web.WebApi.NinjectDependencyResolver(kernel);
                 return kernel;
             }
             catch
@@ -64,7 +71,10 @@ namespace SocialImagesGallary.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            System.Web.Mvc.DependencyResolver.SetResolver(new SocialImagesGallary.Util.NinjectDependencyResolver(kernel));
+            kernel.Bind<IUnitOfWork>().To<IdentityUnitOfWork>().WithConstructorArgument("ApplicationDb");
+            kernel.Bind<IUserService>().To<UserService>();
+            
+            //System.Web.Mvc.DependencyResolver.SetResolver(new SocialImagesGallary.Util.NinjectDependencyResolver(kernel));
         }        
     }
 }

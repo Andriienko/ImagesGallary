@@ -95,7 +95,23 @@ namespace SocialImagesGallary.Controllers
                 };
                 OperationDetails operationDetails = await UserService.Create(userDto);
                 if (operationDetails.Succedeed)
-                    return RedirectToAction("Index","Home");
+                {
+                    ClaimsIdentity claim = await UserService.Authenticate(userDto);
+                    if (claim == null)
+                    {
+                        ModelState.AddModelError("", "Can`t authenticate user");
+                    }
+                    else
+                    {
+                        AuthenticationManager.SignOut();
+                        AuthenticationManager.SignIn(new AuthenticationProperties
+                        {
+                            IsPersistent = true
+                        }, claim);
+                        return RedirectToAction("Index","Home");
+                    }
+                }
+                    
                 else
                     ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
             }
