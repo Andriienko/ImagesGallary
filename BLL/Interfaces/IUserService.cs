@@ -16,5 +16,8 @@ namespace BLL.Interfaces
         IEnumerable<UserDTO> GetAllUsers();
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
         Task SetInitialData(UserDTO adminDto, List<string> roles);
+        ProfileDTO GetProfile(string userName);
+        bool UploadUserImage(string userName, string path);
+        string RenderAvatar(string userName);
     }
 }

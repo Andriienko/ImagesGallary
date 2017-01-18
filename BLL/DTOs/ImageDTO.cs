@@ -20,5 +20,23 @@ namespace BLL.DTOs
 
         public IEnumerable<Message> Messages { get; set; }
 
+       public static IEnumerable<ImageDTO> CreateMany(IEnumerable<Image> images)
+       {
+            List<ImageDTO> imageDtos=new List<ImageDTO>();
+           foreach (var image in images)
+           {
+               var imgDto=new ImageDTO
+               {
+                   Id=image.Id,
+                   Title = image.Title,
+                   Path = image.Path,
+                   UserId = image.UserId,
+                   User = image.User,
+                   Messages = image.Messages
+               };
+                imageDtos.Add(imgDto);
+           }
+           return imageDtos;
+       }
     }
 }

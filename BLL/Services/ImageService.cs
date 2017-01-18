@@ -18,9 +18,9 @@ namespace BLL.Services
         {
             Database = uow;
         }
-        public async Task<bool> AddImage(ImageDTO newImage,string userName)
+        public bool AddImage(ImageDTO newImage,string userName)
         {
-            var user=await Database.UserManager.FindByNameAsync(userName);
+            var user= Database.UserManager.FindByName(userName);
             if (user != null)
             {
                 var image = new Image {
@@ -29,21 +29,21 @@ namespace BLL.Services
                     UserId=user.Id
                 };
                 Database.Images.Create(image);
-                await Database.SaveAsync();
+                Database.SaveAsync();
                 return true;
             }
             return false;
         }
 
-        public IEnumerable<Image> GetAllImages(string userName)
+        public IEnumerable<ImageDTO> GetAllImages(string userName)
         {
             var user = Database.UserManager.FindByName(userName);
             if (user != null)
             {
                 var allImages= user.Images;
-                return allImages;
+                return ImageDTO.CreateMany(allImages);
             }
-            return new List<Image>();
+            return new List<ImageDTO>();
             }
 
         public Image GetImageById(int id,string userName)
@@ -56,29 +56,29 @@ namespace BLL.Services
             return null;
         }
 
-        public async Task<bool> RemoveImage(ImageDTO image,string userName)
+        public bool RemoveImage(ImageDTO image,string userName)
         {
-            var user = await Database.UserManager.FindByNameAsync(userName);
+            var user = Database.UserManager.FindByName(userName);
             if (user != null)
             {
                 var img = user.Images.FirstOrDefault(i => i.Id == image.Id);
                 if (img != null)
                 {
                     user.Images.Remove(img);
-                    await Database.SaveAsync();
+                    Database.SaveAsync();
                     return true;
                 }
             }
             return false;
         }
-        public async Task<bool> RenameImage(ImageDTO image, string userName)
+        public bool RenameImage(ImageDTO image, string userName)
         {
-            var user = await Database.UserManager.FindByNameAsync(userName);
+            var user = Database.UserManager.FindByName(userName);
             if (user != null)
             {
                 var img = user.Images.FirstOrDefault(i=>i.Id==image.Id);
                 img.Title = image.Title;
-                await Database.SaveAsync();
+                Database.SaveAsync();
                 return true;
             }
             return false;

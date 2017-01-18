@@ -1,0 +1,25 @@
+﻿<div id="upload-form" class="section panel panel-primary">
+    <div class="panel-heading">Images Gallery</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("AddImage", "Image", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <fieldset>
+                <legend>Upload a file</legend>
+                <div class="editor-field">
+                    @Html.TextBox("file", "", new { type = "file" })
+                </div>
+                <div class="editor-field">
+                    <label>Title</label>
+                    @Html.TextBox("title")
+                </div>
+                <div class="editor-field">
+                    <input type="submit" value="Upload" />
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+

@@ -29,7 +29,6 @@ namespace SocialImagesGallary.Controllers
             {
                 if (file.ContentLength > 0)
                 {
-                    string[] keys = HttpContext.Request.Cookies.AllKeys;
                     var fileName = Path.GetFileName(file.FileName);
                     var path = Path.Combine(Server.MapPath("~/App_Data/Images"), userName);
                     bool existFolder = System.IO.Directory.Exists(path);
@@ -50,8 +49,6 @@ namespace SocialImagesGallary.Controllers
             }
             catch
             {
-                ViewBag.Message = "Upload failed";
-                string[] keys = HttpContext.Request.Cookies.AllKeys;
                 return RedirectToAction("Index", "Home");
             }
         }

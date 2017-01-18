@@ -1,0 +1,31 @@
+﻿.avatar {
+    border: 1px solid;
+}
+.avatar-container {
+    width: 260px;
+    height: 380px;
+    border: 1px solid;
+    max-width: 30%;
+    margin-left: 25%;
+    float: left;
+}
+#userInfo {
+    margin-left: 50px;
+    float: left;
+    width: 30%;
+    height: 380px;
+    max-width: 50%;
+}
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.file {
+  visibility: hidden;
+  position: absolute;
+}
+#search {
+    /*max-width: 400px;*/
+    margin-left: 20%;
+}

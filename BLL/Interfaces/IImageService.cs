@@ -10,10 +10,10 @@ namespace BLL.Interfaces
 {
    public  interface IImageService:IDisposable
     {
-        Task<bool> AddImage(ImageDTO newImage,string userName);
-        Task<bool> RemoveImage(ImageDTO image,string userName);
-        Task<bool> RenameImage(ImageDTO image, string userName);
+        bool AddImage(ImageDTO newImage,string userName);
+        bool RemoveImage(ImageDTO image,string userName);
+        bool RenameImage(ImageDTO image, string userName);
         Image GetImageById(int id,string userName);
-        IEnumerable<Image> GetAllImages(string userName);
+        IEnumerable<ImageDTO> GetAllImages(string userName);
     }
 }

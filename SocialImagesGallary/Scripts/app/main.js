@@ -15,7 +15,7 @@ var apiSortUrls = {
     common: "/api/Sort/"
 };
 var viewModel = {
-    users: ko.observableArray(),
+    users: ko.observableArray()
     //editor: {
     //    userName: ko.observable(""),
     //    firstName: ko.observable(""),

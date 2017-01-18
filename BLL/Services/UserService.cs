@@ -53,6 +53,46 @@ namespace BLL.Services
                 claims = await Database.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             return claims;
         }
+
+        public bool UploadUserImage(string userName,string path)
+        {
+            var user = Database.UserManager.FindByName(userName);
+            if (user != null)
+            {
+                var isOk = Database.ProfileManager.UploadImage(user.Id, path);
+                return isOk;
+            }
+            return false;
+        }
+        public string RenderAvatar(string userName)
+        {
+            var user = Database.UserManager.FindByName(userName);
+            if (user != null)
+            {
+                var path = Database.ProfileManager.LoadAvatar(user.Id);
+                return path;
+            }
+            return String.Empty;
+        }
+        public ProfileDTO GetProfile(string userName)
+        {
+            var user = Database.UserManager.FindByName(userName);
+            if (user != null)
+            {
+                var profile = Database.ProfileManager.GetProfile(user.Id);
+                var profileDto = new ProfileDTO
+                {
+                    Id = profile.Id,
+                    Name = profile.Name,
+                    UserName = user.UserName,
+                    Adress = profile.Adress,
+                    Email = user.Email
+                };
+                return profileDto;
+            }
+            return  new ProfileDTO();
+        }
+
         public async void AddFriend(string email1,string email2)
         {
             AppUser user = await Database.UserManager.FindByEmailAsync(email1);

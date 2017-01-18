@@ -1,17 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ImagesGallery</title>
-    
-</head>
-<body>
-    <div id="users" class="section panel panel-primary">
+@section Scripts
+{
+    @Scripts.Render("~/bundles/scripts/home")
+}
+<div id="users" class="section panel panel-primary">
         <div class="panel-heading">Users</div>
         <div class="panel-body">
             <table class="table table-striped table-condensed">
@@ -72,5 +66,5 @@
                 </div>*@
         </div>
         </div>
-</body>
-</html>
+
+

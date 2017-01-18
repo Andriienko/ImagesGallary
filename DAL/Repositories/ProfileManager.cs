@@ -22,6 +22,34 @@ namespace DAL.Repositories
             Database.SaveChanges();
         }
 
+        public UserProfile GetProfile(string userId)
+        {
+            var profile = Database.UserProfiles.FirstOrDefault(p => p.Id == userId);
+            return profile;
+        }
+
+        public bool UploadImage(string userId,string path)
+        {
+            var profile = Database.UserProfiles.FirstOrDefault(u => u.Id == userId);
+            if (profile != null)
+            {
+                profile.UserImage = path;
+                Database.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public string LoadAvatar(string userId)
+        {
+            var profile = Database.UserProfiles.FirstOrDefault(u => u.Id == userId);
+            if (profile != null)
+            {
+                return profile.UserImage;
+            }
+            return  String.Empty;
+        }
+
         public void Dispose()
         {
             Database.Dispose();

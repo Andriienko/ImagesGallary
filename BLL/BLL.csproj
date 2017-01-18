@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="DTOs\FriendDTO.cs" />
     <Compile Include="DTOs\ImageDTO.cs" />
+    <Compile Include="DTOs\ProfileDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />

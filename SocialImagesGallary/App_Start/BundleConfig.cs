@@ -16,9 +16,11 @@ namespace SocialImagesGallary
                 "~/Scripts/jquery.unobtrusive-ajax.js",
                 "~/Scripts/jquery.validate.js",
                 "~/Scripts/jquery.validate.unobtrusive.js",
-                "~/Scripts/knockout-3.4.1.js",
-                "~/Scripts/app/main.js"
+                "~/Scripts/knockout-3.4.1.js"
                 ));
+            bundles.Add(new ScriptBundle("~/bundles/scripts/home").Include("~/Scripts/app/main.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/scripts/profile").Include("~/Scripts/app/profile.js"));
         }
     }
 }

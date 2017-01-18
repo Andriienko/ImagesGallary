@@ -10,5 +10,8 @@ namespace DAL.Interfaces
     public interface IProfileManager : IDisposable
     {
         void Create(UserProfile item);
+        bool UploadImage(string userId,string path);
+        string LoadAvatar(string userId);
+        UserProfile GetProfile(string userName);
     }
 }
