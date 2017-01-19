@@ -44,7 +44,18 @@ namespace BLL.Services
                 return ImageDTO.CreateMany(allImages);
             }
             return new List<ImageDTO>();
+        }
+
+        public int GetImagesCount(string userName)
+        {
+            var user = Database.UserManager.FindByName(userName);
+            if (user != null)
+            {
+                var count = user.Images.Count;
+                return count;
             }
+            return 0;
+        }
 
         public ImageDTO GetImageById(int id,string userName)
         {

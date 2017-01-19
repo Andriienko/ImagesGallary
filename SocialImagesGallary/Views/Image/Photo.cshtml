@@ -44,7 +44,7 @@
         <div class="arrows">
             <ul>
                 <input type="hidden" id="pointer" value="0" />
-
+                <input type="hidden" id="count" value="@ViewBag.Count" />
                 <li><img id="back" src="~/Content/Images/left-arrow.png" /></li>
                 <li><img id="forward" src="~/Content/Images/right-arrow.png" /> </li>
 
@@ -109,10 +109,13 @@
         });
         $('#forward').click(function () {
             var val = $('#pointer').val();
+            var count = $('#count').val();
             var id = parseInt(val);
-            id = id + 1;
-            $('#pointer').val(id);
-            getImagePartial(id);
+            if (!((id +1)> (count - 1))) {
+                id = id + 1;
+                $('#pointer').val(id);
+                getImagePartial(id);
+            }
         });
         $('#send').on('click',function () {
             var msg = {

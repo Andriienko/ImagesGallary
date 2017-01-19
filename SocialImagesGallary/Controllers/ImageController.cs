@@ -23,6 +23,8 @@ namespace SocialImagesGallary.Controllers
         }
         public ActionResult Photo()
         {
+            var userName = User.Identity.Name;
+            ViewBag.Count = ImageService.GetImagesCount(userName);
             return View();
         }
         public ActionResult PartialPhoto(int id=0)
@@ -34,8 +36,6 @@ namespace SocialImagesGallary.Controllers
         public void AddImage(HttpPostedFileBase file,string title)
         {
             var userName = User.Identity.Name;
-            try
-            {
                 if (file.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
@@ -53,13 +53,6 @@ namespace SocialImagesGallary.Controllers
                     };
                     ImageService.AddImage(imageDto,userName);
                 }
-                //ViewBag.Message = "Upload successful";
-                //return RedirectToAction("Index","Home");
-            }
-            catch
-            {
-                //return RedirectToAction("Index", "Home");
-            }
         }
         public ActionResult GetAllImages()
         {

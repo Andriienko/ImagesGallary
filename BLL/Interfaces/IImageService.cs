@@ -17,5 +17,6 @@ namespace BLL.Interfaces
         ImageDTO GetImageById(int id,string userName);
         IEnumerable<ImageDTO> GetAllImages(string userName);
         IEnumerable<MessageDTO> GetAllMessages(int imgId);
+       int GetImagesCount(string userName);
     }
 }
