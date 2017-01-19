@@ -1,0 +1,10 @@
+﻿@using BLL.DTOs
+@model ImageDTO
+    <input type="hidden" id="imgId" value="@Model.Id">
+<p class="title">@Model.Title</p>
+<div class="Image_container">
+    <img src="@Url.Action("RenderImage", "Image", new {path = @Model.Path})" width="800" height="500"/>
+</div>
+
+
+

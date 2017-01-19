@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "Photo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts
+{
+    @Scripts.Render("~/bundles/scripts/gallery")
+}
+@section Styles
+{
+    @Styles.Render("~/Content/css/gallery")
+}
+<div id="main">
+    <button type="submit" id="addPhoto" class="btn btn-primary btn-lg">Add Photo</button>
+    <div class="gallery-container">
+
+
+        <div id="partial">
+
+        </div>
+        <div class="typing" rows="6" cols="50">
+            <textarea id="text"> </textarea>
+            <button type="submit" id="send" class="btn btn-primary btn-lg">Send</button>
+        </div>
+        <div class="coments">
+            <table>
+                <thead>
+                    <tr><th></th></tr>
+                </thead>
+                <tbody data-bind="foreach: viewModel.messages">
+                    <tr>
+                        <td>
+                            <div>
+                                <input type="hidden" data-bind="text:Id" />
+                                <span data-bind="text:UserName" id="heat"></span><span data-bind="text:SendTime"></span><br />
+                                <p data-bind="text:Content" id="content"></p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="arrows">
+            <ul>
+                <input type="hidden" id="pointer" value="0" />
+
+                <li><img id="back" src="~/Content/Images/left-arrow.png" /></li>
+                <li><img id="forward" src="~/Content/Images/right-arrow.png" /> </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="upload-form" class="section panel panel-primary">
+    <div class="panel-heading">Images Gallery</div>
+    <div class="panel-body">
+        <div class="form-group">
+            <input type="file" name="file" id="file" class="file">
+            <div class="input-group col-xs-12">
+                <span class="input-group-btn">
+                    <button class="browse btn btn-primary input-md" type="button">Browse <i class="glyphicon glyphicon-search"></i></button>
+                </span>
+                <input type="text" class="form-control input-md" disabled placeholder="Upload Image">
+            </div>
+            <input type="text" class="form-control input-md" id="titl" placeholder="Title">
+        </div>
+        <button id="upload" type="submit" class="btn btn-primary btn-block">Upload</button>
+    </div>
+</div>
+<script type="text/javascript">
+   
+    $(document).ready(function () {
+        ko.applyBindings(viewModel);
+        $(document).on('click', '.browse', function () {
+            var file = $(this).parent().parent().parent().find('.file');
+            file.trigger('click');
+        });
+        $(document).on('change', '.file', function () {
+            $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+        });
+        $('#upload-form').hide();
+        $('#addPhoto').click(function () {
+            $('#main').hide();
+            $('#file').hide();
+            $('#upload-form').show();
+        });
+        $('#upload').click(function () {
+            var data = new FormData();
+            var title = $('#titl').val();
+            $.each($('#file')[0].files, function (i, file) {
+                data.append('file', file);
+            });
+            data.append('title',title);
+            addPhoto(data,"/Image/AddImage");
+            $('#main').show();
+            $('#upload-form').hide();
+        });
+        getImagePartial();
+        $('#back').click(function () {
+            var val = $('#pointer').val();
+            var id = parseInt(val);
+            id = id - 1;
+            if (id < 0)
+                id = 0;
+            $('#pointer').val(id);
+            getImagePartial(id);
+
+        });
+        $('#forward').click(function () {
+            var val = $('#pointer').val();
+            var id = parseInt(val);
+            id = id + 1;
+            $('#pointer').val(id);
+            getImagePartial(id);
+        });
+        $('#send').on('click',function () {
+            var msg = {
+                Content: $('#text').val(),
+                ImageId: $('#imgId').val()
+            };
+            addMessage(msg);
+        });
+    });
+</script>

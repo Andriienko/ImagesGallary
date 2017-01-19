@@ -16,9 +16,9 @@ namespace BLL.DTOs
 
         public string UserId { get; set; }
 
-        public AppUser User { get; set; }
+        public string UserName { get; set; }
 
-        public IEnumerable<Message> Messages { get; set; }
+        public IEnumerable<MessageDTO> Messages { get; set; }
 
        public static IEnumerable<ImageDTO> CreateMany(IEnumerable<Image> images)
        {
@@ -31,12 +31,25 @@ namespace BLL.DTOs
                    Title = image.Title,
                    Path = image.Path,
                    UserId = image.UserId,
-                   User = image.User,
-                   Messages = image.Messages
+                   UserName = image.User.UserName,
+                   Messages = MessageDTO.CreateMany(image.Messages)
                };
                 imageDtos.Add(imgDto);
            }
            return imageDtos;
        }
+        public static ImageDTO Create(Image image)
+        {
+                var imgDto = new ImageDTO
+                {
+                    Id = image.Id,
+                    Title = image.Title,
+                    Path = image.Path,
+                    UserId = image.UserId,
+                    UserName = image.User.UserName,
+                    Messages = MessageDTO.CreateMany(image.Messages)
+                };
+            return imgDto;
+        }
     }
 }

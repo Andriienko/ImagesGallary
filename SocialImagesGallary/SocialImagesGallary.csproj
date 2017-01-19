@@ -179,7 +179,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\avatar.png" />
+    <Content Include="Content\Images\ava.jpg" />
+    <Content Include="Content\Images\left-arrow.png" />
+    <Content Include="Content\Images\right-arrow.png" />
+    <Content Include="Content\photoGallery.css" />
     <Content Include="Content\profile.css" />
     <Content Include="Content\Style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -192,6 +195,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Scripts\app\gallery.js" />
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\profile.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -242,6 +246,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Shared\UploadImage.cshtml" />
+    <Content Include="Views\Image\Photo.cshtml" />
+    <Content Include="Views\Image\_PartialPhoto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -251,7 +257,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Images\" />
-    <Folder Include="Views\Image\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">

@@ -8,6 +8,7 @@ using DAL.Entities;
 using DAL.Identity;
 using DAL.Repositories;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
 
 namespace DAL.EF
 {
@@ -46,30 +47,29 @@ namespace DAL.EF
             PerformInitialSetup(context);
             base.Seed(context);
         }
-        public async void PerformInitialSetup(ApplicationContext context)
+        public  void PerformInitialSetup(ApplicationContext context)
         {
             ApplicationUserManager userMgr = new ApplicationUserManager(new UserStore<AppUser>(context));
             ApplicationRoleManager roleMgr = new ApplicationRoleManager(new RoleStore<AppRole>(context));
             ProfileManager profileMgr = new ProfileManager(context);
-            List<string> roles= new List<string> {"Admin","User"};
-            string userName = "Admin";
-            string password = "Pass1@";
-            string email = "roman.andriienko@globallogic.com";
-            foreach (string roleName in roles)
-            {
-                var role = await roleMgr.FindByNameAsync(roleName);
-                if (role == null)
+                List<string> roles = new List<string> { "Admin", "User" };
+                string userName = "Admin";
+                string password = "Pass1@";
+                string email = "roman.andriienko@globallogic.com";
+                foreach (string roleName in roles)
                 {
-                    role = new AppRole (roleName);
-                    await roleMgr.CreateAsync(role);
+                    var role =roleMgr.FindByName(roleName);
+                    if (role == null)
+                    {
+                        role = new AppRole(roleName);
+                        roleMgr.Create(role);
+                    }
                 }
-            }
-            AppUser user = await userMgr.FindByEmailAsync(userName);
+            AppUser user = userMgr.FindByEmail(email);
             if (user == null)
             {
-                await userMgr.CreateAsync(new AppUser { UserName = userName, Email = email },
-                password);
-                user = await userMgr.FindByEmailAsync(email);
+                userMgr.Create(new AppUser { UserName = userName, Email = email },password);
+                user = userMgr.FindByEmail(email);
             }
             UserProfile profile = new UserProfile
             {
@@ -78,10 +78,10 @@ namespace DAL.EF
                 Name = "Roman Andriienko"
             };
             profileMgr.Create(profile);
-            bool inRole = await userMgr.IsInRoleAsync(user.Id, "Admin");
+            bool inRole = userMgr.IsInRole(user.Id, "Admin");
             if (!inRole)
             {
-               await userMgr.AddToRoleAsync(user.Id, "Admin");
+               userMgr.AddToRole(user.Id, "Admin");
             }
         }
     }

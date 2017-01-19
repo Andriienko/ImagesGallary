@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/scripts")
     @RenderSection("Scripts",false)
+    @RenderSection("Styles", false)
 </head>
 <body>
     <div>
@@ -14,7 +15,8 @@
             <div class="container">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="@Url.Action("Index","Home")">Home<span class="sr-only">(current)</span></a></li>
-                    <li><a href="@Url.Action("Index","Profile")">Profile</a></li>
+                    <li><a href="@Url.Action("Index", "Profile")">Profile</a></li>
+                    <li><a href="@Url.Action("Photo","Image")">Gallery</a></li>
                     <li><a href="@Url.Action("Logout","Account")">Sign Out</a></li>
                  </ul>
             </div>

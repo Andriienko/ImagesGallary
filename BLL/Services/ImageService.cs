@@ -46,12 +46,21 @@ namespace BLL.Services
             return new List<ImageDTO>();
             }
 
-        public Image GetImageById(int id,string userName)
+        public ImageDTO GetImageById(int id,string userName)
         {
             var user = Database.UserManager.FindByName(userName);
             if (user != null)
             {
-                return user.Images.FirstOrDefault(i=>i.Id==id);
+                var count = user.Images.Count;
+                if (id < 0)
+                    id = 0;
+                else if(id>count-1)
+                {
+                    id = count-1;
+                }
+                Image image= user.Images.ElementAtOrDefault(id);
+                var imageDto = ImageDTO.Create(image);
+                return imageDto;
             }
             return null;
         }
@@ -82,6 +91,29 @@ namespace BLL.Services
                 return true;
             }
             return false;
+        }
+        //Message block
+        public MessageDTO AddMessage(MessageDTO newmsg,string userName)
+        {
+            var user = Database.UserManager.FindByName(userName);
+            if (user != null)
+            {
+                newmsg.UserId = user.Id;
+                newmsg.SendTime=DateTime.Now.ToUniversalTime().ToString();
+                newmsg.UserName = userName;
+            }
+            var image = MessageDTO.ConvertToMessage(newmsg);
+            Database.Messages.Create(image);
+            return newmsg;
+        }
+
+        public IEnumerable<MessageDTO> GetAllMessages(int imgId)
+        {
+            var img=Database.Images.GetAll().FirstOrDefault(i=>i.Id==imgId);
+            var foo = Database.Messages.GetAll().Where(m => m.ImageId == imgId);
+            var allMessages = img.Messages.ToList();
+            var allDtos = MessageDTO.CreateMany(foo.ToList());
+            return allDtos;
         }
 
         public void Dispose()

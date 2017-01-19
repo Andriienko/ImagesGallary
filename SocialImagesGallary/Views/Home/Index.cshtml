@@ -5,6 +5,7 @@
 {
     @Scripts.Render("~/bundles/scripts/home")
 }
+
 <div id="users" class="section panel panel-primary">
         <div class="panel-heading">Users</div>
         <div class="panel-body">
@@ -27,44 +28,6 @@
             </table>
         </div>
     </div>
-    <div id="upload-form" class="section panel panel-primary">
-        <div class="panel-heading">Images Gallery</div>
-        <div class="panel-body">
-            @using (Html.BeginForm("AddImage", "Image", FormMethod.Post,
-        new { enctype = "multipart/form-data" }))
-            {
-                @Html.AntiForgeryToken()
-
-                <fieldset>
-                    <legend>Upload a file</legend>
-                    <div class="editor-field">
-                        @Html.TextBox("file", "", new { type = "file" })
-                    </div>
-                    <div class="editor-field">
-                        @Html.TextBox("title")
-                    </div>
-                    <div class="editor-field">
-                        <input type="submit" value="Upload" />
-                    </div>
-                </fieldset>
-            }
-            @*<p class="title">@(ViewData["Name"] as string)</p>
-                <div class="Image_container">
-                    <img src="@Url.Action("RenderImage","Home",new {id=@ViewBag.Pointer})" width="1000" height="600" />
-                </div>
-                <div class="arrows">
-                    <ul>
-                        @if ((int)ViewBag.Pointer > 0)
-                    {
-                            <a id="back" href="@Url.Action("Index", "Home" , new {id=@ViewBag.Pointer - 1})"> <img src="~/Content/Images/left-arrow.png" /> </a>
-                        }
-                        @if ((int)ViewBag.Pointer < (int)ViewBag.CatalogSize - 1)
-                        {
-                            <a id="forward" href="@Url.Action("Index", "Home" , new {id=@ViewBag.Pointer + 1})"> <img src="~/Content/Images/right-arrow.png" /> </a>
-                        }
-                    </ul>
-                </div>*@
-        </div>
-        </div>
+    
 
 

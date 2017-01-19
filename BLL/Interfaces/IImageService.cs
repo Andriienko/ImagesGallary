@@ -13,7 +13,9 @@ namespace BLL.Interfaces
         bool AddImage(ImageDTO newImage,string userName);
         bool RemoveImage(ImageDTO image,string userName);
         bool RenameImage(ImageDTO image, string userName);
-        Image GetImageById(int id,string userName);
+        MessageDTO AddMessage(MessageDTO newmsg,string userName);
+        ImageDTO GetImageById(int id,string userName);
         IEnumerable<ImageDTO> GetAllImages(string userName);
+        IEnumerable<MessageDTO> GetAllMessages(int imgId);
     }
 }

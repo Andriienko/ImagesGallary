@@ -1,0 +1,65 @@
+﻿.Image_container {
+    border: 1px solid;
+    /*position: relative;*/
+    /*top: 100px;*/
+    /*left: 300px;*/
+    margin-left: 20px;
+    width: 800px;
+    height: 500px;
+}
+.title {
+    text-align: center;
+    font-size: 30px;
+    
+}
+.arrows{
+    width: 100%;
+}
+.arrows ul {
+    list-style-type: none;
+}
+#forward {
+    position: relative;
+    float: right;
+}
+#back {
+    position: relative;
+    float: left
+}
+.typing{
+    margin-top: 10px;
+    width: 100%;
+    float: left;
+    border: 1px solid;
+}
+.typing textarea{
+    width: 70%;
+    height: 100%;
+    margin: 0px 5px 0px 10px;
+}
+.typing button{
+    width: 20%;
+    margin-left: 4%;
+    float: left;
+}
+.gallery-container {
+    max-width: 50%;
+    height: 100%;
+    border: 1px solid;
+    margin-left: 24%;
+}
+.coments table {
+    width: 100%;
+}
+.coments table tr{
+    border: 1px solid;
+}
+#heat {
+    font-weight: bold;
+    color: green;
+    margin-left: 2%;
+}
+#content {
+    margin-left: 5%;
+ 
+}
