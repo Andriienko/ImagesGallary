@@ -21,15 +21,25 @@ namespace SocialImagesGallary.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<IImageService>();
             }
         }
-        public ActionResult Photo()
+        public ActionResult Photo(string userName)
         {
-            var userName = User.Identity.Name;
+            if (String.IsNullOrEmpty(userName))
+            {
+                userName = User.Identity.Name;
+            }
             ViewBag.Count = ImageService.GetImagesCount(userName);
+            ViewData["UserName"] = userName;
             return View();
         }
-        public ActionResult PartialPhoto(int id=0)
+        [HttpPost]
+        public ActionResult LoadUsersGallery(string userNam)
         {
-            var model = GetImageHelper(id);
+            return Json(new { url = Url.Action("Photo", "Image", new { userName=userNam}) });
+        }
+
+        public ActionResult PartialPhoto(string userName,int id=0)
+        {
+            var model = GetImageHelper(userName,id);
             return PartialView("_PartialPhoto",model);
         }
         [HttpPost]
@@ -62,7 +72,7 @@ namespace SocialImagesGallary.Controllers
         }
         public ActionResult GetImage(int id=0)
         {
-            var imag = GetImageHelper(id);
+            var imag = GetImageHelper("",id);
             return Json(imag, JsonRequestBehavior.AllowGet);
         }
 
@@ -85,9 +95,10 @@ namespace SocialImagesGallary.Controllers
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
         
-        private ImageDTO GetImageHelper(int id)
+        private ImageDTO GetImageHelper(string userName,int id)
         {
-            var userName = User.Identity.Name;
+            if(String.IsNullOrEmpty(userName))
+                 userName = User.Identity.Name;
             var imag = ImageService.GetImageById(id, userName);
             return imag;
         }

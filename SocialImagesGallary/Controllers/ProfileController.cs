@@ -17,9 +17,19 @@ namespace SocialImagesGallary.Controllers
         }
 
         // GET: Profile
-        public ActionResult Index()
+        public ActionResult Index(string userName)
         {
+            if (String.IsNullOrEmpty(userName))
+            {
+                userName = User.Identity.Name;
+            }
+            ViewData["UserName"] = userName;
             return View();
+        }
+        [HttpPost]
+        public ActionResult LoadUsersProfile(string userNam)
+        {
+            return Json(new { url = Url.Action("Index", "Profile", new { userName = userNam }) });
         }
 
         [HttpPost]
@@ -46,9 +56,12 @@ namespace SocialImagesGallary.Controllers
             //return Json(200, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
-        public ActionResult RenderAvatar()
+        public ActionResult RenderAvatar(string userName)
         {
-            var userName = User.Identity.Name;
+            if (String.IsNullOrEmpty(userName))
+            {
+                userName = User.Identity.Name;
+            }
             var path = UserService.RenderAvatar(userName);
             if (String.IsNullOrEmpty(path))
             {
@@ -58,9 +71,12 @@ namespace SocialImagesGallary.Controllers
             return File(image, "image/jpg");
         }
         [HttpGet]
-        public ActionResult GetProfile()
+        public ActionResult GetProfile(string userName)
         {
-            var userName = User.Identity.Name;
+            if (String.IsNullOrEmpty(userName))
+            {
+                userName = User.Identity.Name;
+            }
             var profile = UserService.GetProfile(userName);
             return Json(profile, JsonRequestBehavior.AllowGet);
         }

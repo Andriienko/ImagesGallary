@@ -4,8 +4,12 @@
 function sendAjaxRequest(httpMethod, calback, url, reqData) {
     $.ajax(url, { type: httpMethod, typeData: "JSON", success: calback, data: reqData });
 }
-function getImagePartial(index) {
-    sendAjaxRequest("GET", insertData, "PartialPhoto", {id:index});
+function getImagePartial(userNik, index) {
+    var ob = {
+        userName: userNik,
+        id:index
+    };
+    sendAjaxRequest("GET", insertData, "PartialPhoto", ob);
 }
 function getAllMessages(id) {
     sendAjaxRequest("GET", insertMsgs, "GetAllMessages", {imgId:id});

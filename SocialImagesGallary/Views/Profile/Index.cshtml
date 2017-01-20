@@ -11,11 +11,12 @@
 {
     @Styles.Render("~/Content/css/profile")
 }
+<input type="hidden" id="userName" value="@ViewData["UserName"]" />
 <h2>My Profile</h2>
 <div class="profile-container">
     <div class="avatar-container">
         <div class="avatar">
-            <img id="picture"src="@Url.Action("renderAvatar", "Profile")" width="250" height="280"/>
+            <img id="picture"src="@Url.Action("renderAvatar", "Profile",new {userName=@ViewData["UserName"]})" width="250" height="280"/>
       </div>
       @using (Html.BeginForm("UploadUserImage", "Profile", FormMethod.Post,
             new {enctype = "multipart/form-data"}))
@@ -33,18 +34,6 @@
             </div>
             <button id="save" type="submit" class="btn btn-primary btn-block">Save</button>
         }
-
-        @*@using (Ajax.BeginForm(new AjaxOptions { Url = Url.Action("UploadUserImage", "Profile",
-            new { enctype = "multipart/form-data" }),OnSuccess = "insertAvatar" }))
-        {
-                        @Html.AntiForgeryToken()
-                            <div class="editor-field">
-                    @Html.TextBox("file", "", new { type = "file",id="img" })
-                </div>
-                <div class="editor-field">
-                    <input type="submit" value="Save" />
-                </div>
-        }*@
     </div>
     <div id="userInfo" class="section panel panel-primary">
         <div class="panel-heading">Info</div>
@@ -87,7 +76,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         ko.applyBindings(viewModel);
-        getProfile();
+        var userName = $('#userName').val();
+        getProfile(userName);
 
         //$('#save').on('click', function () {
         //    var data = new FormData();

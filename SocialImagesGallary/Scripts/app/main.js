@@ -5,24 +5,17 @@
 var apiUserUrls = {
     common: "/Admin/",
     getAllUsers: "/api/User/",
-    //getUser: common,
     postUser: "/Admin/Create",
-    //updateUser: "",
     deleteUser: "/Admin/Delete"
-    //getAllUser: ""
-};
-var apiSortUrls = {
-    common: "/api/Sort/"
 };
 var viewModel = {
-    users: ko.observableArray()
-    //editor: {
-    //    userName: ko.observable(""),
-    //    firstName: ko.observable(""),
-    //    lastName: ko.observable(""),
-    //    email: ko.observable(""),
-    //    password: ko.observable(""),
-    //}
+    users: ko.observableArray(),
+    profileHandler: function(data) {
+        sendAjaxRequest("POST", reloadPage, "Profile/LoadUsersProfile", { userNam: data.UserName });
+    },
+    galleryHandler: function(data) {
+        sendAjaxRequest("POST", reloadPage, "Image/LoadUsersGallery", { userNam: data.UserName });
+    }
 };
 
 function sendAjaxRequest(httpMethod, calback, url, reqData) {
@@ -31,42 +24,16 @@ function sendAjaxRequest(httpMethod, calback, url, reqData) {
 function getAllUsers() {
     sendAjaxRequest("GET", insertData, apiUserUrls.getAllUsers);
 }
-function deleteUser(user) {
-    sendAjaxRequest("GET", deleteUserHelper, apiUserUrls.deleteUser, { userId: user.Id });
-}
-function getSortedUsers(by) {
-    sendAjaxRequest("GET", insertData, apiSortUrls.common, { by: by });
-}
+
 function insertData(data) {
     viewModel.users.removeAll();
     for (var i = 0; i < data.length; i++) {
         viewModel.users.push(data[i]);
     }
 }
-function deleteUserHelper(userId) {
-    for (var i = 0; i < viewModel.users().length; i++) {
-        if (viewModel.users()[i].Id == userId) {
-            viewModel.users.remove(viewModel.users()[i]);
-            break;
-        }
-    }
-}
-function createUser() {
-    var newUser = getUserDTO();
-    console.log(newUser);
-    sendAjaxRequest("POST", function (id) {
-        newUser.Id = id;
-        viewModel.users.push(newUser);
-    }, apiUserUrls.postUser, { model: newUser });
+
+function reloadPage(response) {
+    window.location=response.url;
 }
 
-function getUserDTO() {
-    var user = {};
-    user.UserName = viewModel.editor.userName();
-    user.FirstName = viewModel.editor.firstName();
-    user.LastName = viewModel.editor.lastName();
-    user.Email = viewModel.editor.email();
-    user.Password = viewModel.editor.password();
-    return user;
-}
 

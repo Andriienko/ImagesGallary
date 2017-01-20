@@ -44,7 +44,8 @@
         <div class="arrows">
             <ul>
                 <input type="hidden" id="pointer" value="0" />
-                <input type="hidden" id="count" value="@ViewBag.Count" />
+                <input type="hidden" id="count" value="@ViewBag.Count"/>
+                <input type="hidden" id="userName" value="@ViewData["UserName"]" />
                 <li><img id="back" src="~/Content/Images/left-arrow.png" /></li>
                 <li><img id="forward" src="~/Content/Images/right-arrow.png" /> </li>
 
@@ -72,6 +73,7 @@
    
     $(document).ready(function () {
         ko.applyBindings(viewModel);
+        var userName=$('#userName').val();        
         $(document).on('click', '.browse', function () {
             var file = $(this).parent().parent().parent().find('.file');
             file.trigger('click');
@@ -96,7 +98,7 @@
             $('#main').show();
             $('#upload-form').hide();
         });
-        getImagePartial();
+        getImagePartial(userName);
         $('#back').click(function () {
             var val = $('#pointer').val();
             var id = parseInt(val);
@@ -104,7 +106,7 @@
             if (id < 0)
                 id = 0;
             $('#pointer').val(id);
-            getImagePartial(id);
+            getImagePartial(userName,id);
 
         });
         $('#forward').click(function () {
@@ -114,7 +116,7 @@
             if (!((id +1)> (count - 1))) {
                 id = id + 1;
                 $('#pointer').val(id);
-                getImagePartial(id);
+                getImagePartial(userName,id);
             }
         });
         $('#send').on('click',function () {
