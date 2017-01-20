@@ -1,4 +1,5 @@
-﻿
+﻿// Ты создаешь глобальные переменные и функции в глобальном скоупе. Переделай в модуль или обьект
+
 var viewModel = {
     friends:ko.observableArray(),
     id: ko.observable(),

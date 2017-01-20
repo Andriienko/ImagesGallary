@@ -1,8 +1,10 @@
-﻿$(document).ready(function () {
+﻿//функция document.ready должна быть в теге script в html файле
+$(document).ready(function () {
     ko.applyBindings(viewModel);
     var userName = $('#userName').val();
     getAllUsers(userName);
 });
+//такие штуки тоже должны быть в html файле. Нужно юзать razor для их генерации
 var apiUserUrls = {
     common: "/Admin/",
     getAllUsers: "/api/User/",

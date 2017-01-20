@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SocialImagesGallary.Models.ViewModels
 {
+    //такие простые модели лучше заменять экшнами с несколькими параметрами
     public class LoginViewModel
     {
         [Required]
