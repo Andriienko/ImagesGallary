@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     ko.applyBindings(viewModel);
-    getAllUsers();
+    var userName = $('#userName').val();
+    getAllUsers(userName);
 });
 var apiUserUrls = {
     common: "/Admin/",
@@ -15,14 +16,17 @@ var viewModel = {
     },
     galleryHandler: function(data) {
         sendAjaxRequest("POST", reloadPage, "Image/LoadUsersGallery", { userNam: data.UserName });
+    },
+    friendHandler: function (data) {
+        sendAjaxRequest("POST", function(data) {}, "Friend/AddFriend", { friendName: data.UserName });
     }
 };
 
 function sendAjaxRequest(httpMethod, calback, url, reqData) {
     $.ajax(url, { type: httpMethod, typeData: "JSON", success: calback, data: reqData });
 }
-function getAllUsers() {
-    sendAjaxRequest("GET", insertData, apiUserUrls.getAllUsers);
+function getAllUsers(userNam) {
+    sendAjaxRequest("GET", insertData, apiUserUrls.getAllUsers, {userName:userNam});
 }
 
 function insertData(data) {

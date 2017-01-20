@@ -6,11 +6,13 @@ using System.Web.Mvc;
 
 namespace SocialImagesGallary.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
+            var userName = User.Identity.Name;
+            @ViewData["UserName"] = userName;
             return View();
         }
     }

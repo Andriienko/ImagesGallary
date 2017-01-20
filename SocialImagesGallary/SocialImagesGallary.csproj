@@ -181,6 +181,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\ava.jpg" />
     <Content Include="Content\Images\left-arrow.png" />
+    <Content Include="Content\Images\no-imgs.jpg" />
     <Content Include="Content\Images\right-arrow.png" />
     <Content Include="Content\photoGallery.css" />
     <Content Include="Content\profile.css" />
@@ -223,6 +224,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -257,6 +259,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Images\" />
+    <Folder Include="Views\Friend\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">

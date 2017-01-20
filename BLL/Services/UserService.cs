@@ -93,19 +93,79 @@ namespace BLL.Services
             return  new ProfileDTO();
         }
 
-        public async void AddFriend(string email1,string email2)
+        public async Task<UserDTO> AddFriend(string userName,string friendName)
         {
-            AppUser user = await Database.UserManager.FindByEmailAsync(email1);
-            AppUser user2 = await Database.UserManager.FindByEmailAsync(email2);
+            AppUser user = await Database.UserManager.FindByNameAsync(userName);
+            AppUser friend = await Database.UserManager.FindByNameAsync(friendName);
+            if (user != null && friend!=null)
+            {
+                //var newFriend=new Friend
+                //{
+                //    FirstId = user.Id,
+                //    SecondId = friend.Id
+                //};
+                if (!user.Friends.Contains(friend)&& user!=friend)
+                {
+                    user.Friends.Add(friend);
+                    Database.Db.SaveChanges();
+                    var friendDto = new UserDTO
+                    {
+                        Id = friend.Id,
+                        UserName = friend.UserName,
+                        Email = friend.Email
+                    };
+                    return friendDto;
+                }
+                
+                //Database.Friends.Create(newFriend);
+
+            }
+            return new UserDTO();
+        }
+        public IEnumerable<UserDTO> GetAllFriends(string userName)
+        {
+            List<UserDTO> friendDtos = new List<UserDTO>();
+            AppUser userr = Database.UserManager.FindByName(userName);
+            if (userr != null)
+            {
+                var friends = userr.Friends.ToList();//Not good
+                    foreach (var friend in friends)
+                    {
+                        //var user = Database.UserManager.Users.FirstOrDefault(u => u.Id == friend.SecondId);
+                        //if (user != null)
+                        //{
+                        var userDto = new UserDTO
+                        {
+                            Id = friend.Id,
+                            UserName = friend.UserName,
+                            Email = friend.Email
+                        };
+                        friendDtos.Add(userDto);
+                        //}
+                    }
+                //var allFriends = Database.Friends.GetAll().ToList();
+                //IEnumerable<Friend> userFriends = allFriends.Where(f => f.FirstId == userr.Id);
+               
+            }
+            return friendDtos;
+        }
+
+        public bool IsFriends(string userOne, string userTwo)
+        {
+            bool isFriends = false;
+            var user=Database.UserManager.FindByName(userTwo);
+            var user2 = Database.UserManager.FindByName(userOne);
             if (user != null && user2!=null)
             {
-                //user.Friends    
+                isFriends=user.Friends.Contains(user2);
             }
+            return isFriends;
         }
-        public IEnumerable<UserDTO> GetAllUsers()
+
+        public IEnumerable<UserDTO> GetAllUsers(string userName)
         {
             List<UserDTO> users = new List<UserDTO>();
-            foreach (var user in Database.Db.Users)
+            foreach (var user in Database.Db.Users.Where(u=>u.UserName!=userName))
             {
                 var userDto = new UserDTO {
                     Id=user.Id,

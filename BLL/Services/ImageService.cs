@@ -63,17 +63,21 @@ namespace BLL.Services
             if (user != null)
             {
                 var count = user.Images.Count;
-                if (id < 0)
-                    id = 0;
-                else if(id>count-1)
+                if (count > 0)
                 {
-                    id = count-1;
+
+                    if (id < 0)
+                        id = 0;
+                    else if (id > count - 1)
+                    {
+                        id = count - 1;
+                    }
+                    Image image = user.Images.ElementAtOrDefault(id);
+                    var imageDto = ImageDTO.Create(image);
+                    return imageDto;
                 }
-                Image image= user.Images.ElementAtOrDefault(id);
-                var imageDto = ImageDTO.Create(image);
-                return imageDto;
             }
-            return null;
+            return new ImageDTO();
         }
 
         public bool RemoveImage(ImageDTO image,string userName)
@@ -121,6 +125,8 @@ namespace BLL.Services
         public IEnumerable<MessageDTO> GetAllMessages(int imgId)
         {
             var img=Database.Images.GetAll().FirstOrDefault(i=>i.Id==imgId);
+            if (img == null)
+                return null;
             var foo = Database.Messages.GetAll().Where(m => m.ImageId == imgId);
             var allMessages = img.Messages.ToList();
             var allDtos = MessageDTO.CreateMany(foo.ToList());

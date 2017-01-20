@@ -9,6 +9,7 @@ using System.IO;
 
 namespace SocialImagesGallary.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private IUserService UserService
@@ -19,17 +20,26 @@ namespace SocialImagesGallary.Controllers
         // GET: Profile
         public ActionResult Index(string userName)
         {
+            var accountOwner= User.Identity.Name;
             if (String.IsNullOrEmpty(userName))
             {
-                userName = User.Identity.Name;
+                userName = accountOwner;
             }
+            ViewData["AccountOwner"] = accountOwner;
             ViewData["UserName"] = userName;
             return View();
         }
         [HttpPost]
         public ActionResult LoadUsersProfile(string userNam)
         {
-            return Json(new { url = Url.Action("Index", "Profile", new { userName = userNam }) });
+            var userNik = User.Identity.Name;
+            bool isFriend = UserService.IsFriends(userNik, userNam);
+            if(isFriend)
+                return Json(new { url = Url.Action("Index", "Profile", new { userName = userNam }) });
+            else
+            {
+                return Json(new { url = Url.Action("Index", "Home")});
+            }
         }
 
         [HttpPost]

@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace SocialImagesGallary.Controllers
 {
+    [Authorize]
     public class ImageController : Controller
     {
         private IImageService ImageService
@@ -21,14 +22,31 @@ namespace SocialImagesGallary.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<IImageService>();
             }
         }
+        private IUserService UserService
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<IUserService>();
+            }
+        }
         public ActionResult Photo(string userName)
         {
+            int isFriend = 0;
+            var accountOwner = User.Identity.Name;
             if (String.IsNullOrEmpty(userName))
             {
-                userName = User.Identity.Name;
+                userName = accountOwner;
             }
-            ViewBag.Count = ImageService.GetImagesCount(userName);
+            ViewData["AccountOwner"] = accountOwner;
             ViewData["UserName"] = userName;
+            ViewBag.Count = ImageService.GetImagesCount(userName);
+            if (accountOwner != userName)
+            {
+                var friend = UserService.IsFriends(accountOwner, userName);
+                if (friend)
+                    isFriend = 1;
+            }
+            ViewData["IsFriends"] = isFriend;
             return View();
         }
         [HttpPost]
@@ -78,7 +96,9 @@ namespace SocialImagesGallary.Controllers
 
         public ActionResult RenderImage(string path)
         {
-            byte[] image = System.IO.File.ReadAllBytes(path);
+            if (path == null)
+                path = Path.Combine(Server.MapPath("~/Content/Images/"), "no-imgs.jpg");
+            byte[] image= System.IO.File.ReadAllBytes(path);
             return File(image, "image/jpg");
         }
         public ActionResult GetAllMessages(int imgId=0)

@@ -19,7 +19,10 @@ function insertData(data) {
     target.empty();
     target.append(data);
     var imgId = $('#imgId').val();
-    getAllMessages(imgId);
+    var count = $('#count').val();
+    console.log(count);
+    if(count!==0)
+        getAllMessages(imgId);
 }
 
 function addMessage(msgDto) {
@@ -34,6 +37,20 @@ function insertMsgs(data) {
     }
 }
 
+function isFriends(flag) {
+    console.log(flag);
+    if (flag === 0) {
+        $('.typing').hide();
+        $('.coments').hide();
+    }
+}
+function hideBtnsIfNotOwner() {
+    var owner = $('#accountOwner').val();
+    var userName = $('#userName').val();
+    if (owner !== userName) {
+        $('#addPhoto').hide();
+    }
+}
 function addPhoto(data,urla) {
     $.ajax({
                 url: urla,

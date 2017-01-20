@@ -11,6 +11,11 @@
 {
     @Styles.Render("~/Content/css/gallery")
 }
+<input type="hidden" id="pointer" value="0" />
+<input type="hidden" id="count" value="@ViewBag.Count" />
+<input type="hidden" id="userName" value="@ViewData["UserName"]" />
+<input type="hidden" id="isFriends" value="@ViewData["IsFriends"]"/>
+<input type="hidden" id="accountOwner" value="@ViewData["AccountOwner"]" />
 <div id="main">
     <button type="submit" id="addPhoto" class="btn btn-primary btn-lg">Add Photo</button>
     <div class="gallery-container">
@@ -43,9 +48,6 @@
         </div>
         <div class="arrows">
             <ul>
-                <input type="hidden" id="pointer" value="0" />
-                <input type="hidden" id="count" value="@ViewBag.Count"/>
-                <input type="hidden" id="userName" value="@ViewData["UserName"]" />
                 <li><img id="back" src="~/Content/Images/left-arrow.png" /></li>
                 <li><img id="forward" src="~/Content/Images/right-arrow.png" /> </li>
 
@@ -73,7 +75,8 @@
    
     $(document).ready(function () {
         ko.applyBindings(viewModel);
-        var userName=$('#userName').val();        
+        var userName = $('#userName').val();
+        isFriends(@ViewData["IsFriends"]);
         $(document).on('click', '.browse', function () {
             var file = $(this).parent().parent().parent().find('.file');
             file.trigger('click');
@@ -102,12 +105,11 @@
         $('#back').click(function () {
             var val = $('#pointer').val();
             var id = parseInt(val);
-            id = id - 1;
-            if (id < 0)
-                id = 0;
-            $('#pointer').val(id);
-            getImagePartial(userName,id);
-
+            if (!((id - 1) < 0)) {
+                id = id - 1;
+                $('#pointer').val(id);
+                getImagePartial(userName, id);
+            }
         });
         $('#forward').click(function () {
             var val = $('#pointer').val();

@@ -5,7 +5,7 @@
 {
     @Scripts.Render("~/bundles/scripts/home")
 }
-
+<input type="hidden" id="userName" value="@ViewData["UserName"]" />
 <div id="users" class="section panel panel-primary">
         <div class="panel-heading">Users</div>
         <div class="panel-body">
@@ -19,11 +19,11 @@
                         <td data-bind="text: Email"></td>
                         <td>
                             <button class="btn btn-xs btn-primary"
-                                    data-bind="click:viewModel.profileHandler">
+                                    data-bind="click:viewModel.friendHandler">
                                 Add To Friends
                             </button>
                         </td>
-                        <td> <a href="#" class="btn btn-info btn-md" role="button" data-bind="click:viewModel.profileHandler">Profile</a></td>
+                        <td class="profile-btn"> <a href="#" class="btn btn-info btn-md" role="button" data-bind="click:viewModel.profileHandler">Profile</a></td>
                         <td><a href="#" class="btn btn-info" role="button" data-bind="click:viewModel.galleryHandler">Gallery</a></td>
 </tr>
                 </tbody>
