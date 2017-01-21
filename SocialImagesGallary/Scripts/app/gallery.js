@@ -1,20 +1,21 @@
-﻿var viewModel = {
+﻿var GalleryObject = { };
+GalleryObject.viewModel = {
     messages: ko.observableArray()
 };
-function sendAjaxRequest(httpMethod, calback, url, reqData) {
+GalleryObject.sendAjaxRequest=function (httpMethod, calback, url, reqData) {
     $.ajax(url, { type: httpMethod, typeData: "JSON", success: calback, data: reqData });
 }
-function getImagePartial(userNik, index) {
+GalleryObject.getImagePartial=function (userNik, index,url) {
     var ob = {
         userName: userNik,
         id:index
     };
-    sendAjaxRequest("GET", insertData, "PartialPhoto", ob);
+    this.sendAjaxRequest("GET", this.insertData,url, ob);
 }
-function getAllMessages(id) {
-    sendAjaxRequest("GET", insertMsgs, "GetAllMessages", {imgId:id});
+GalleryObject.getAllMessages = function (id,url) {
+    this.sendAjaxRequest("GET", this.insertMsgs, url, { imgId: id });
 }
-function insertData(data) {
+GalleryObject.insertData=function (data) {
     var target = $('#partial');
     target.empty();
     target.append(data);
@@ -22,36 +23,42 @@ function insertData(data) {
     var count = $('#count').val();
     console.log(count);
     if(count!==0)
-        getAllMessages(imgId);
+        GalleryObject.getAllMessages(imgId,Urls.getAllMessages);
 }
 
-function addMessage(msgDto) {
-    sendAjaxRequest("POST", function(data) {
-        viewModel.messages.push(data);
-    }, "AddMessage", {newMessage: msgDto });
+GalleryObject.addMessage=function (msgDto,url) {
+    this.sendAjaxRequest("POST", function(data) {
+        GalleryObject.viewModel.messages.push(data);
+    }, url, {newMessage: msgDto });
 }
-function insertMsgs(data) {
-    viewModel.messages.removeAll();
+GalleryObject.insertMsgs=function (data) {
+    GalleryObject.viewModel.messages.removeAll();
     for (var i = 0; i < data.length; i++) {
-        viewModel.messages.push(data[i]);
+        GalleryObject.viewModel.messages.push(data[i]);
     }
 }
 
-function isFriends(flag) {
-    console.log(flag);
+GalleryObject.isFriends=function (flag) {
+    var countVal = $('#count').val();
+    var count = parseInt(countVal);
     if (flag === 0) {
         $('.typing').hide();
         $('.coments').hide();
     }
+    if (count === 0) {
+        $('.typing').hide();
+        $('.coments').hide();
+        $('.arrows').hide();
+    }
 }
-function hideBtnsIfNotOwner() {
+GalleryObject.hideBtnsIfNotOwner=function () {
     var owner = $('#accountOwner').val();
     var userName = $('#userName').val();
     if (owner !== userName) {
         $('#addPhoto').hide();
     }
 }
-function addPhoto(data,urla) {
+GalleryObject.addPhoto = function (data, urla) {
     $.ajax({
                 url: urla,
                 data: data,
@@ -59,6 +66,10 @@ function addPhoto(data,urla) {
                 contentType: false,
                 processData: false,
                 type: 'POST',
-                success: function () {}
+                success: function () {
+                    var countVal = $('#count').val();
+                    var count = parseInt(countVal);
+                    $('#count').val(count + 1);
+                }
             });
 }

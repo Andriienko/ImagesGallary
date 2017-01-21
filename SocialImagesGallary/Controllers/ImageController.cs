@@ -31,7 +31,7 @@ namespace SocialImagesGallary.Controllers
         }
         public ActionResult Photo(string userName)
         {
-            int isFriend = 0;
+            int isFriend = 1;
             var accountOwner = User.Identity.Name;
             if (String.IsNullOrEmpty(userName))
             {
@@ -45,6 +45,8 @@ namespace SocialImagesGallary.Controllers
                 var friend = UserService.IsFriends(accountOwner, userName);
                 if (friend)
                     isFriend = 1;
+                else
+                    isFriend = 0;
             }
             ViewData["IsFriends"] = isFriend;
             return View();

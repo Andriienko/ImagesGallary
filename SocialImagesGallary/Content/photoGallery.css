@@ -1,9 +1,9 @@
 ﻿.Image_container {
-    border: 1px solid;
+    
     /*position: relative;*/
     /*top: 100px;*/
     /*left: 300px;*/
-    margin-left: 20px;
+    margin-left: 8px;
     width: 800px;
     height: 500px;
 }
@@ -13,24 +13,26 @@
     
 }
 .arrows{
+    position: absolute;
+    top:280px;
     width: 100%;
 }
 .arrows ul {
     list-style-type: none;
 }
 #forward {
-    position: relative;
     float: right;
+   margin-right:100px;
 }
 #back {
-    position: relative;
-    float: left
+    float: left;
+    margin-left:50px;
 }
 .typing{
     margin-top: 10px;
     width: 100%;
     float: left;
-    border: 1px solid;
+   
 }
 .typing textarea{
     width: 70%;
@@ -43,10 +45,10 @@
     float: left;
 }
 .gallery-container {
-    max-width: 50%;
+    max-width: 60%;
     height: 100%;
-    border: 1px solid;
-    margin-left: 24%;
+   
+    margin-left: 20%;
 }
 .coments table {
     width: 100%;
@@ -62,4 +64,9 @@
 #content {
     margin-left: 5%;
  
+}
+#addPhoto {
+    position:absolute;
+    top:70px;
+    right:30px;
 }

@@ -13,23 +13,35 @@
                 <thead>
                     <tr id="head"><th>User Name</th><th>Email</th><th></th><th></th><th></th></tr>
                 </thead>
-                <tbody data-bind="foreach: viewModel.users">
+                <tbody data-bind="foreach:  SocialUsers.viewModel.users">
                     <tr>
                         <td data-bind="text:UserName"></td>
                         <td data-bind="text: Email"></td>
                         <td>
                             <button class="btn btn-xs btn-primary"
-                                    data-bind="click:viewModel.friendHandler">
+                                    data-bind="click: SocialUsers.viewModel.friendHandler">
                                 Add To Friends
                             </button>
                         </td>
-                        <td class="profile-btn"> <a href="#" class="btn btn-info btn-md" role="button" data-bind="click:viewModel.profileHandler">Profile</a></td>
-                        <td><a href="#" class="btn btn-info" role="button" data-bind="click:viewModel.galleryHandler">Gallery</a></td>
-</tr>
+                        <td class="profile-btn"> <a href="#" class="btn btn-info btn-md" role="button" data-bind="click: SocialUsers.viewModel.profileHandler">Profile</a></td>
+                        <td><a href="#" class="btn btn-info" role="button" data-bind="click: SocialUsers.viewModel.galleryHandler">Gallery</a></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    
+ <script type="text/javascript">
+     var Urls = {
+         getAllUsers:'/api/User/',
+         addFriend:'@Url.Action("AddFriend", "Friend")',
+         loadUserGallery:'@Url.Action("LoadUsersGallery", "Image")',
+         loadUserProfile:'@Url.Action("LoadUsersProfile", "Profile")'
+     };
+     $(document).ready(function () {
+         ko.applyBindings(SocialUsers.viewModel);
+         var userName = $('#userName').val();
+         SocialUsers.getAllUsers(userName,Urls.getAllUsers);
+     });
+ </script>   
 
 

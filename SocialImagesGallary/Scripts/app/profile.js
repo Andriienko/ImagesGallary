@@ -1,6 +1,6 @@
 ﻿// Ты создаешь глобальные переменные и функции в глобальном скоупе. Переделай в модуль или обьект
-
-var viewModel = {
+var SocialProfile = {};
+SocialProfile.viewModel = {
     friends:ko.observableArray(),
     id: ko.observable(),
     userName: ko.observable(),
@@ -8,53 +8,50 @@ var viewModel = {
     adress: ko.observable(),
     email: ko.observable(),
     friendHandler: function (data) {
-        sendAjaxRequest("POST", insertFriend, "Friend/AddFriend", { friendName: data.UserName });
+        SocialProfile.sendAjaxRequest("POST", SocialProfile.insertFriend, Urls.addFriend, { friendName: data.UserName });
     }
 };
-var profileUrls = {
-    getProfile: "/Profile/GetProfile",
-    loadAvatar: "/Profile/UploadUserImage"
-};
-function sendAjaxRequest(httpMethod, calback, url, reqData) {
+
+SocialProfile.sendAjaxRequest = function (httpMethod, calback, url, reqData) {
     $.ajax(url, { type: httpMethod, typeData: "JSON", success: calback, data: reqData });
 }
-function getProfile(userNam) {
-    sendAjaxRequest("GET", insertData, profileUrls.getProfile, {userName:userNam});
+SocialProfile.getProfile=function (userNam,url) {
+    this.sendAjaxRequest("GET", this.insertData, url, {userName:userNam});
 }
-function insertData(data) {
-    viewModel.id(data.Id);
-    viewModel.userName(data.UserName);
-    viewModel.name(data.Name);
-    viewModel.email(data.Email);
-    viewModel.adress(data.Adress);
+SocialProfile.insertData=function (data) {
+    SocialProfile.viewModel.id(data.Id);
+    SocialProfile.viewModel.userName(data.UserName);
+    SocialProfile.viewModel.name(data.Name);
+    SocialProfile.viewModel.email(data.Email);
+    SocialProfile.viewModel.adress(data.Adress);
 }
-function insertFriend(friend) {
+SocialProfile.insertFriend=function (friend) {
     //viewModel.friends.push(friend);
 }
-function getAllFriends(userNam) {
-    sendAjaxRequest("POST", insertAllFriends, "Friend/GetFriends", {userName:userNam});
+SocialProfile.getAllFriends=function (userNam,url) {
+    this.sendAjaxRequest("POST", this.insertAllFriends, url, {userName:userNam});
 }
 
-function insertAllFriends(data) {
-    viewModel.friends.removeAll();
+SocialProfile.insertAllFriends=function (data) {
+    SocialProfile.viewModel.friends.removeAll();
     for (var i = 0; i < data.length; i++) {
-        viewModel.friends.push(data[i]);
+        SocialProfile.viewModel.friends.push(data[i]);
     }
     var owner = $('#accountOwner').val();
-    hideBtnsIfOwnPage(owner);
+    SocialProfile.hideBtnsIfOwnPage(owner);
 }
 
-function hideBtnsIfOwnPage(accountOwner) {
-    console.log(accountOwner);
-    if (accountOwner === viewModel.userName()) {
+SocialProfile.hideBtnsIfOwnPage=function (accountOwner) {
+    if (accountOwner === SocialProfile.viewModel.userName()) {
         $('.hiden').hide();
     }
 }
 
-function hideBtnsIfNotOwner() {
+SocialProfile.hideBtnsIfNotOwner=function () {
     var owner = $('#accountOwner').val();
     var userName = $('#userName').val();
     if (owner !== userName) {
         $('.nav-for-load').hide();
+        $('#header').hide();
     }
 }
